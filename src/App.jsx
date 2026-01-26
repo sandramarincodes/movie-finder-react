@@ -7,6 +7,7 @@ import { getTrendingMovies, updateSearchCount } from "./appwrite.js";
 
 const API_BASE_URL = "https://api.themoviedb.org/3";
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+const POSTER_FALLBACK_URL = `${import.meta.env.BASE_URL}no-movie.png`;
 
 const API_OPTIONS = {
   method: "GET",
@@ -92,7 +93,13 @@ function App() {
               {trendingMovies.map((movie, index) => (
                 <li key={movie.$id}>
                   <p>{index + 1}</p>
-                  <img src={movie.poster_url} alt={movie.title} />
+                  <img
+                    src={movie.poster_url || POSTER_FALLBACK_URL}
+                    alt={movie.title}
+                    onError={(event) => {
+                      event.currentTarget.src = POSTER_FALLBACK_URL;
+                    }}
+                  />
                 </li>
               ))}
             </ul>

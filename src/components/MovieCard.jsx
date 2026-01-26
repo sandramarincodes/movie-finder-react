@@ -3,13 +3,15 @@ import React from "react";
 function MovieCard({
   movie: { title, vote_average, poster_path, release_date, original_language },
 }) {
+  const posterFallbackUrl = `${import.meta.env.BASE_URL}no-movie.png`;
+
   return (
     <div className="movie-card">
       <img
         src={
           poster_path
             ? `https://image.tmdb.org/t/p/w500/${poster_path}`
-            : "/no-movie.png"
+            : posterFallbackUrl
         }
         alt={title}
       />
